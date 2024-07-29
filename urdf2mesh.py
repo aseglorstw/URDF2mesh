@@ -7,14 +7,9 @@ import meshes_extracted
 
 
 def main(arguments):
-    robot_model = load_URDF(arguments.urdf_path)
+    robot_model = URDF.load(arguments.urdf_path)
     extracted_mesh = extract_mesh(robot_model)
     save_mesh(extracted_mesh, os.path.dirname(meshes_extracted.__file__))
-
-
-def load_URDF(path_to_URDF):
-    robot_model = URDF.load(path_to_URDF)
-    return robot_model
 
 
 def extract_mesh(robot_model):
