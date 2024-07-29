@@ -36,3 +36,4 @@ if __name__ == '__main__':
     parser.add_argument("--urdf_path", default='', type=str, help="Path to the .urdf file")
     args = parser.parse_args()
     main(args)
+
