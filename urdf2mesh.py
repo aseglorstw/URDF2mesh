@@ -5,20 +5,17 @@ import argparse
 
 
 def merge_meshes(mesh_list):
-    # Get vertices and faces
+
     verts_list = [mesh.vertices for mesh in mesh_list]
     faces_list = [mesh.faces for mesh in mesh_list]
 
-    # Num of faces per mesh
     faces_offset = np.cumsum([v.shape[0] for v in verts_list], dtype=np.float32)
 
-    # Compute offset for faces, otherwise they all start from 0
     faces_offset = np.insert(faces_offset, 0, 0)[:-1]
 
     verts = np.vstack(verts_list)
     faces = np.vstack([face + offset for face, offset in zip(faces_list, faces_offset)])
 
-    # Create single mesh
     mesh = trimesh.Trimesh(verts, faces)
 
     return mesh
