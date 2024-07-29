@@ -2,56 +2,54 @@ from urdfpy import URDF
 import numpy as np
 import trimesh
 import argparse
+import os
+import meshes_extracted
 
 
 def merge_meshes(mesh_list):
-
-    verts_list = [mesh.vertices for mesh in mesh_list]
+    vertices_list = [mesh.vertices for mesh in mesh_list]
     faces_list = [mesh.faces for mesh in mesh_list]
-
-    faces_offset = np.cumsum([v.shape[0] for v in verts_list], dtype=np.float32)
-
+    faces_offset = np.cumsum([v.shape[0] for v in vertices_list], dtype=np.float32)
     faces_offset = np.insert(faces_offset, 0, 0)[:-1]
-
-    verts = np.vstack(verts_list)
+    vertices = np.vstack(vertices_list)
     faces = np.vstack([face + offset for face, offset in zip(faces_list, faces_offset)])
-
-    mesh = trimesh.Trimesh(verts, faces)
-
+    mesh = trimesh.Trimesh(vertices, faces)
     return mesh
 
 
-def main(args):
-    print(args)
-    robot = URDF.load(args.urdf_path)
+def main(arguments):
+    print(arguments)
+    robot = URDF.load(arguments.urdf_path)
+    # The function visual_trimesh_fk() returns a dictionary where the key is a mesh and value is a matrix of
+    # transformation of mesh relative base link frame.
+    meshes = robot.visual_trimesh_fk()
+    output_dir = os.path.dirname(meshes_extracted.__file__)
+    mesh_list = []
 
-    #meshes = robot.visual_trimesh_fk()
-    # output_dir = os.path.dirname(meshes_extracted.__file__)
-    # mesh_list = []
-    # for idx, mesh in enumerate(meshes):
-    #
-    #     pose = meshes[mesh]  # 4 x 4 : rotation + translation
-    #
-    #     translation = pose[:3, 3][:, None]
-    #
-    #     # Add a column of zeros to the vertices
-    #     verts = np.array(mesh.vertices)
-    #     zeros = np.zeros((verts.shape[0], 1))
-    #     new_verts = np.hstack((verts, zeros))
-    #
-    #     # Apply pose to the vertices
-    #     verts_pose = pose @ new_verts.transpose(1, 0)
-    #     verts_pose = verts_pose[:3, :] + translation
-    #     verts_pose = verts_pose.transpose(1, 0)
-    #
-    #     mesh_extracted = trimesh.Trimesh(verts_pose, mesh.faces)
-    #
-    #     mesh_list.append(mesh_extracted)
-    #
-    #     # Save mesh
-    #     if args.multiple_obj:
-    #         path = os.path.join(output_dir, f'mesh_extracted_{idx}.obj')
-    #         trimesh.exchange.export.export_mesh(mesh_extracted, path, file_type='obj')
+    for idx, mesh in enumerate(meshes):
+        matrix_of_rotation_and_translation = meshes[mesh]
+        translation_vector = matrix_of_rotation_and_translation[:3, 3][:, None]
+        rotation_matrix = matrix_of_rotation_and_translation[:3, :3]
+
+        # So, we have now the mesh as "mesh" with the coordinates of vertices with respect to its frame. And we have a
+        # matrix of transformation of each vertice of mesh relative to base link - "matrix_of_rotation_and_translation."
+
+        vertices = np.array(mesh.vertices)
+        vertices_base_link = (rotation_matrix @ vertices.transpose(1, 0) + translation_vector).T
+
+
+
+
+
+        #
+        # mesh_extracted = trimesh.Trimesh(verts_pose, mesh.faces)
+        #
+        # mesh_list.append(mesh_extracted)
+        #
+        # # Save mesh
+        # if args.multiple_obj:
+        #     path = os.path.join(output_dir, f'mesh_extracted_{idx}.obj')
+        #     trimesh.exchange.export.export_mesh(mesh_extracted, path, file_type='obj')
     #
     #     # Merge meshes
     # mesh_merged = merge_meshes(mesh_list)
