@@ -7,29 +7,33 @@ import meshes_extracted
 
 
 def main(arguments):
-    robot = URDF.load(arguments.urdf_path)
+    robot_model = load_URDF(arguments.urdf_path)
+    extracted_mesh = extract_mesh(robot_model)
+    save_mesh(extracted_mesh, os.path.dirname(meshes_extracted.__file__))
 
-    meshes = robot.visual_trimesh_fk()
 
-    output_dir = os.path.dirname(meshes_extracted.__file__)
+def load_URDF(path_to_URDF):
+    robot_model = URDF.load(path_to_URDF)
+    return robot_model
+
+
+def extract_mesh(robot_model):
+    meshes = robot_model.visual_trimesh_fk()
     mesh_list = []
-
     for (mesh, matrix_of_rotation_and_translation) in meshes.items():
-
         translation_vector = matrix_of_rotation_and_translation[:3, 3][:, None]
         rotation_matrix = matrix_of_rotation_and_translation[:3, :3]
-
         vertices = np.array(mesh.vertices)
         vertices_base_link = (rotation_matrix @ vertices.T + translation_vector).T
-
         mesh_extracted = trimesh.Trimesh(vertices_base_link, mesh.faces)
-
         mesh_list.append(mesh_extracted)
-
     mesh_merged = trimesh.util.concatenate(mesh_list)
+    return mesh_merged
 
-    path = os.path.join(output_dir, 'mesh_merged.obj')
-    trimesh.exchange.export.export_mesh(mesh_merged, path, file_type='obj')
+
+def save_mesh(extracted_mesh, output_directory):
+    path = os.path.join(output_directory, 'mesh_merged.obj')
+    trimesh.exchange.export.export_mesh(extracted_mesh, path, file_type='obj')
 
 
 if __name__ == '__main__':
