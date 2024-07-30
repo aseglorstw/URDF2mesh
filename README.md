@@ -82,10 +82,9 @@ To work correctly you will need:
 3. ``urdfpy 0.0.22``
 4. ``trimesh 3.16.4``
 
-# Installation 
+if you have all these libraries with correct versions, clone this repository: 
 
-1. ``git clone https://github.com/aseglorstw/URDF2mesh.git``
-2. 
+``git clone https://github.com/aseglorstw/URDF2mesh.git``
 
 # Usage
 1. Prepare your urdf file. Its paths to mesh files should be only absolute.
