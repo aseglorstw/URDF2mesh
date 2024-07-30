@@ -9,7 +9,7 @@ import meshes_extracted
 def main(arguments):
     robot_model = URDF.load(arguments.urdf_path)
     extracted_mesh = extract_mesh(robot_model)
-    save_mesh(extracted_mesh, os.path.dirname(meshes_extracted.__file__))
+    save_mesh(extracted_mesh, os.path.dirname(meshes_extracted.__file__), arguments.urdf_path)
 
 
 def extract_mesh(robot_model):
@@ -26,8 +26,9 @@ def extract_mesh(robot_model):
     return mesh_merged
 
 
-def save_mesh(extracted_mesh, output_directory):
-    path = os.path.join(output_directory, 'mesh_merged.obj')
+def save_mesh(extracted_mesh, output_directory, path_to_urdf):
+    urdf_name, _ = os.path.splitext(os.path.basename(path_to_urdf))
+    path = os.path.join(output_directory,  urdf_name + ".obj")
     trimesh.exchange.export.export_mesh(extracted_mesh, path, file_type='obj')
 
 
