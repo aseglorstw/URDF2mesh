@@ -80,11 +80,17 @@ To work correctly you will need:
 1. ``python 3.8.+``
 2. ``numpy 1.22.3``
 3. ``urdfpy 0.0.22``
-4. ``trimesh==3.16.4``
-
+4. ``trimesh 3.16.4``
 
 # Installation 
 
-# Usage 
+1. ``git clone https://github.com/aseglorstw/URDF2mesh.git``
+2. 
+
+# Usage
+1. Prepare your urdf file. Its paths to mesh files should be only absolute.
 
 # References 
+1. https://github.com/ctu-vras/monoforce
+2. https://wiki.ros.org/urdf/Tutorials/Building%20a%20Visual%20Robot%20Model%20with%20URDF%20from%20Scratch
+3. https://github.com/maurock/urdf_to_obj
