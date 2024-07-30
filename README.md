@@ -92,6 +92,14 @@ you can clone this repository:
 2. Execute the script using the following command:  `` python3 urdf2mesh.py --urdf_path /path/to/urdf/file ``.
 3. The resulting .obj file will be saved in the "meshes_extracted" directory.
 
+# Example 
+Below is the result of a script to translate the Husky robot model from URDF format to .obj format:
+<p align="center">
+  <img src="https://www.clearpathrobotics.com/assets/guides/kinetic/ros/_images/Huskyviz.png" width="50%">
+  <img src=""
+</p>
+
+
 # References 
 1. https://github.com/ctu-vras/monoforce
 2. https://wiki.ros.org/urdf/Tutorials/Building%20a%20Visual%20Robot%20Model%20with%20URDF%20from%20Scratch
