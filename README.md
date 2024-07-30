@@ -78,7 +78,9 @@ of a vertex in 3D space (X, Y, Z). And f: defines a face of the model. Each f li
 # Requirements 
 To work correctly you will need:
 1. ``python 3.8.+``
-2. ``numpy``
+2. ``numpy 1.22.3``
+3. ``urdfpy 0.0.22``
+4. ``trimesh==3.16.4``
 
 
 # Installation 
