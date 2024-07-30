@@ -82,12 +82,15 @@ To work correctly you will need:
 3. ``urdfpy 0.0.22``
 4. ``trimesh 3.16.4``
 
-if you have all these libraries with correct versions, clone this repository: 
+If you have all the required libraries with the correct versions installed, 
+you can clone this repository:
 
 ``git clone https://github.com/aseglorstw/URDF2mesh.git``
 
 # Usage
-1. Prepare your urdf file. Its paths to mesh files should be only absolute.
+1. Prepare your URDF file. Ensure that all paths to mesh files in the URDF are specified as absolute paths.
+2. Execute the script using the following command:  `` python3 urdf2mesh.py --urdf_path /path/to/urdf/file ``.
+3. The resulting .obj file will be saved in the "meshes_extracted" directory.
 
 # References 
 1. https://github.com/ctu-vras/monoforce
