@@ -76,7 +76,9 @@ Here v: defines a vertex of the model. Each v line specifies the coordinates
 of a vertex in 3D space (X, Y, Z). And f: defines a face of the model. Each f line lists the indices of vertices that make up a face. In this example, f 1 2 3 creates a triangle using vertices 1, 2, and 3.
 
 # Requirements 
-
+To work correctly you will need:
+1. ``python 3.8.+``
+2. ``numpy``
 
 
 # Installation 
