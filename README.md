@@ -96,7 +96,7 @@ you can clone this repository:
 Below is the result of a script to translate the Husky robot model from URDF format to .obj format:
 <p align="center">
   <img src="https://www.clearpathrobotics.com/assets/guides/kinetic/ros/_images/Huskyviz.png" width="34.4%">
-  <img src="meshes_extracted/husky.png" width="30%">
+  <img src="images/husky.png" width="30%">
 </p>
 
 
