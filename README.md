@@ -92,6 +92,35 @@ you can clone this repository:
 2. Execute the script using the following command:  `` python3 urdf2mesh.py --urdf_path /path/to/urdf/file ``.
 3. The resulting .obj file will be saved in the "meshes_extracted" directory.
 
+# Notes 
+During the installation process, you may encounter some problems:
+1. ``ImportError: cannot import name 'gcd' from 'fractions' (/home/robert/miniconda3/envs/pytorch3d/lib/python3.9/fractions.py)``
+
+To resolve the issue, update the import statement as follows: 
+``` 
+from math import gcd 
+```
+
+2. ``if len(self._meshes) == 0: TypeError: object of type 'NoneType' has no len() ``
+
+To resolve the issue, update the function 'meshes' as follows: 
+
+```commandline
+def meshes(self):
+    """list of :class:`~trimesh.base.Trimesh` : The triangular meshes
+    that represent this object.
+    """
+    if self._meshes is None:
+        return []
+
+    if len(self._meshes) == 0:
+        self._meshes = [trimesh.creation.cylinder(
+            radius=self.radius, height=self.length
+        )]
+    return self._mesh
+```
+
+
 # Example 
 Below is the result of a script to translate the Husky robot model from URDF format to .obj format:
 <p align="center">
