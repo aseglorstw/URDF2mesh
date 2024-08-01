@@ -93,7 +93,7 @@ you can clone this repository:
 3. The resulting .obj file will be saved in the "meshes_extracted" directory.
 
 # Notes 
-During the installation process, you may encounter some problems:
+During the installation and usage process, you may encounter some problems:
 1. ``ImportError: cannot import name 'gcd' from 'fractions' (/home/robert/miniconda3/envs/pytorch3d/lib/python3.9/fractions.py)``
 
 To resolve the issue, update the import statement as follows: 
