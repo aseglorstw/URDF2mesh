@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<launch>
+    <!-- If your node needs to work with the robot model and it makes sense to trigger some reaction when the model
+    changes (e.g. arm attached or so), please, get the model through a dynamic_reconfigure client. -->
+    <node name="dynamic_robot_model_server" pkg="nifti_robot_description" type="dynamic_robot_model_server.py"
+          clear_params="true" />
+    <!-- clear_params makes sure that the dynamic value defaults will be read from /parts_config even
+     when the user left roscore running and the parameters are pre-loaded from a previous run. -->
+</launch>

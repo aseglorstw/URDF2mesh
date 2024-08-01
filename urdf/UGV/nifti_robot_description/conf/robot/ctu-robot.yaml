@@ -1,0 +1,103 @@
+# only values different from default-robot.yaml need to be defined here; the default config is always loaded
+
+laser_angle_offset: deg(3.3)
+laser_time_offset: -0.021  # [ms]; Delay between capturing a laser scan and processing it in the ROS driver. If set correctly, two consecutive dynamic pointclouds do not "jump" or "rotate" against each other when the robot is still. May change (and need recalibration) after kernel upgrades or hassling with the laser ethernet wiring.
+
+# Name of the robot for High-Level Database purposes
+actor_name: 'Charlie'
+
+tracks_reset_service_name: "gpio_set_sw_2"
+
+mtig_node/device: "/dev/tty_IMU"
+
+# positions of the "fixed" parts of the robot that can be configured (top box, arm attach point, ...)
+parts_config:
+  revision: 2021
+  top_box_j_x: 0.504
+  
+  has_sick_lidar: False
+  has_ouster_lidar: True
+  has_battery_cover: True
+  battery_cover_height: 0.067
+
+  body_mass: 16.0  # TODO
+  battery_mass: 2.7  # TODO
+  
+  flipper_inflation_ratio: 1.5
+  flipper_inward_enlargement: 0.0
+
+  big_collision_box_height: 0.35
+  big_collision_box_width: 0.5
+  big_collision_box_length: 0.6
+  big_collision_box_x: 0.0
+
+  has_mobilicom: False
+  mobilicom_is_lite: True
+  mobilicom_has_antenna_box: False
+  mobilicom_antenna_l_rotation: -0.5
+  mobilicom_antenna_l_tilt: 1.0
+  mobilicom_antenna_r_rotation: 0.0
+  mobilicom_antenna_r_tilt: 1.5758
+  mobilicom_antennas_length: 0.17
+  mobilicom_parent_link: 'rear_right_box'
+  mobilicom_shift_x: 0.0
+  mobilicom_shift_y: 0.01
+  mobilicom_shift_z: 0.2
+  mobilicom_roll: 1.5758
+  mobilicom_pitch: 4.0
+  mobilicom_yaw: 3.14152
+
+  has_gps_antenna: True
+
+rover:
+  robotBodyShift: 0
+  robotWidthBody: 0.243
+  robotLengthBody: 0.635
+
+error_recovery:
+  max_safe_pitch: deg(50.0)
+  max_safe_roll: deg(40.0)
+  dangerous_pitch: deg(45.0)
+  dangerous_roll: deg(35.0)
+  allow_tipover_protection: False 
+
+viz:
+  camera1394_driver:
+    guid: '00b09d01009a0a69'
+  lady_saw:
+    camera_name_format: '00b09d01009a0a69_1232x1616_c%i'
+    
+os_node:
+  sensor_hostname: "os-992107000226.local"
+
+omnicam_sensors_calib:
+  transforms:
+  - [0.042087, -0.001706, -0.000359, -0.500706, 0.499767, -0.499686, 0.499840, 'omnicam', 'camera_0']
+  - [0.011469, -0.040128, -0.000086, -0.110544, 0.698795, -0.697954, 0.111021, 'omnicam', 'camera_1']
+  - [-0.034854, -0.022887, 0.000521, -0.322930, -0.629737, 0.629997, 0.319768, 'omnicam', 'camera_2']
+  - [-0.033204, 0.025729, 0.000217, -0.631192, -0.319196, 0.322546, 0.629027, 'omnicam', 'camera_3']
+  - [0.014502, 0.038991, -0.000301, -0.702075, 0.111793, -0.109872, 0.694637, 'omnicam', 'camera_4']
+  - [0.000402, -0.000922, 0.062128, 0.001613, -0.001059, -0.707499, 0.706711, 'omnicam', 'camera_5']
+
+tf_static_publisher:
+  transforms:
+  - [-0.216,0.035,0.231,-0.259,-0.141,0.904,0.310,'base_link','markers']
+
+# these are 6DOF transforms that need some external calibration and connect parts of robot body or sensors
+# this parameter is processed by print_robot_model.py/dynamic_robot_model_server.py
+calibrated_joints:
+  d435: [0.00, 0.00, 0.00, 0.015, -0.005, 0.0, 'realsense_holder_part2', 'camera_back_mounting_plane']
+  # DPP 2020-01-24
+  t265: [-0.01101015, -0.00626623,  0.2895825, 0.0, 0.0, -1.5758, 'rear_sensor_item', 't265_pose_frame']
+  ouster_holder: [ 0.08, 0.00, 0.005, 0.0, 0.0, 0.0, 'omnicam_top', 'ouster_holder' ]
+  ouster_base: [ 0.00, 0.00, 0.00, 0.00, 0.175, 0.0, 'ouster_holder', 'ouster_base' ]
+  ouster: [ 0.00, 0.00, 0.006, 0.01, 0.01, 0.75, 'ouster_base', 'os_sensor' ]
+
+bullet_api:
+  address: 'https://ctu-robot-bullet'
+
+# inso calibration parameter - rotation matrix aligning tracks and body frame
+# x=`angle=0.8; python -c "import math; a=math.radians($angle); s=math.sin(a); c=math.cos(a); print '\'[%.7f, 0.0000000, %.7f; 0.0000000, 1.0000000, 0.0000000; %.7f, 0.0000000, %.7f]\'' % (c, -s, s, c)"`; echo $x; rosparam set /inso_TracksIMUAlignment "$x"
+#inso_TracksIMUAlignment: '[0.9999120, 0.0000000, -0.0132641; 0.0000000, 1.0000000, 0.0000000; 0.0132641, 0.0000000, 0.9999120]'  # 0.76 deg
+inso_SamplingPeriod: 0.01  # inverse of /imu/data rate
+inso_GyroscopeSF: '[1.0, 0, 0; 0, 1.0, 0; 0, 0, 1.0]'

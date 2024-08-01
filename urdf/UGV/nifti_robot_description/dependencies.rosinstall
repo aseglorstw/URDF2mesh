@@ -1,0 +1,3 @@
+- git:
+    local-name: cras_ouster_description
+    uri: git@gitlab.fel.cvut.cz:cras/subt/sensors/ouster/cras_ouster_description.git
