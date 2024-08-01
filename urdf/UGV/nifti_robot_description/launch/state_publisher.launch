@@ -1,7 +1,0 @@
-<launch>
-    <node pkg="dynamic_robot_state_publisher" type="dynamic_robot_state_publisher"
-          name="nifti_tf_publisher" respawn="true" >
-        <remap from="robot_description" to="nifti_robot_description"/>
-        <remap from="joint_states" to="filtered_joint_states"/>
-    </node>
-</launch>
