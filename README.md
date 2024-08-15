@@ -4,7 +4,7 @@ acting on the robot from the surface of the Earth. The plan involves using a
 more accurate model of the robot, represented as a mesh in the .obj file format.
 
 <p align="center">
-  <img src="https://github.com/ctu-vras/monoforce/raw/master/docs/imgs/monoforce_mayavi.gif">
+  <img src="https://github.com/ctu-vras/monoforce/raw/master/monoforce/docs/imgs/monoforce_mayavi.gif">
   <br><sub>Visualization of the predictive model for forces using a simplified representation of the robot.</sub>  
 </p>
 
