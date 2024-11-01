@@ -133,4 +133,3 @@ Below is the result of a script to translate the Husky robot model from URDF for
 # References 
 1. https://github.com/ctu-vras/monoforce
 2. https://wiki.ros.org/urdf/Tutorials/Building%20a%20Visual%20Robot%20Model%20with%20URDF%20from%20Scratch
-3. https://github.com/maurock/urdf_to_obj
